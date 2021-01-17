@@ -27,20 +27,11 @@ public class ConveyorGate extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void openconveyorGate(Boolean Open){
-    if(Open == true){
-      conveyorGate.set(Value.kReverse);
-    }
-    else{
-      conveyorGate.set(Value.kForward);
-    }
-  }
-
-  public void setgateposition(Value Position){
+  public void setgateposition(Value Position){ //Controls the State of the Conveyor Gate
     conveyorGate.set(Position);
   }
 
-  public Value getgateposition() {
+  public Value getgateposition() { //Returns the Current Position of the Conveyor Gate
     return conveyorGate.get();
   }
 
