@@ -18,7 +18,8 @@ public class RobotMap {
 	//General Robot CAN and Network IDs (i.e. PCM, PDP, Raspberry Pi, etc)
 	public static final int PCMChannel = 1;
 	public static final int PDPChannel = 0;
-	public static final String RaspberryPiIP = "192.168.0.1";
+	public static final String vision_PI_IP = "10.61.81.12";
+	public static final String camera_PI_IP = "10.61.81.11";
 	
 	//Shooter
 	public static final int shooterWheelID = 20;
