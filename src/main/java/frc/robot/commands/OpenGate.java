@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
@@ -28,7 +29,11 @@ public class OpenGate extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_conveyorgate.openconveyorGate(m_state);
+    if(m_state == true){
+      Robot.m_conveyorgate.setgateposition(Value.kReverse); //Open Conveyor Gate to allow balls to flow into shooter
+    }else{
+      Robot.m_conveyorgate.setgateposition(Value.kForward); //Close Conveyor Gate to prevent balls from flowing into shooter
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +45,7 @@ public class OpenGate extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_conveyorgate.openconveyorGate(false);
+    Robot.m_conveyorgate.setgateposition(Value.kForward);
   }
 
   // Called when another command which requires one or more of the same

@@ -58,5 +58,6 @@ public class DriveSwerve extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.m_drivetrain.drive(0, 0, 0, false); //Prevent a robot run away incase of communication interuption
   }
 }
