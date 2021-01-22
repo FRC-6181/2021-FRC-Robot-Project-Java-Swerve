@@ -76,7 +76,8 @@ public class SwerveModule{
    *
    * @param state Desired state with speed and angle.
    */
-  public void setDesiredState(SwerveModuleState state) {
+  public void setDesiredState(SwerveModuleState desiredState) {
+    SwerveModuleState state = SwerveModuleState.optimize(desiredState, new Rotation2d(Units.degreesToRadians(m_turningEncoder.get() + m_turningoffset)));
     // Calculate the drive output from the drive PID controller.
     final double driveOutput = m_drivePIDController.calculate(
       m_driveMotor.getEncoder().getVelocity(), state.speedMetersPerSecond);
