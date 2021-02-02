@@ -86,7 +86,6 @@ public class Robot extends TimedRobot {
     m_drivetrain.updateOdometry();
     /* Determines which Trajectory to use (See Lines 55-68)*/
     
-    
     switch (SmartDashboard.getNumber("ModeForPathWeaver", 0) {
       case 1:
         c_Trajectory = m_Trajectory_1;
