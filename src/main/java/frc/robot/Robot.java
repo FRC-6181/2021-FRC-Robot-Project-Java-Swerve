@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
   public static Trajectory m_Trajectory_1 = new Trajectory();
   public static Trajectory m_Trajectory_2 = new Trajectory();
   public static Trajectory m_Trajectory_3 = new Trajectory();
-
+  
   Command autonomousCommand;
 
   /**
@@ -67,14 +67,8 @@ public class Robot extends TimedRobot {
       DriverStation.reportError("Could not Load Trajectory: Bounce", true);
     }
     
-    /*switch ("") {
-      case 1:
-        break;
-      case 2:
-        break;
-      case 3:
-        break;
-    }*/
+    
+    
     
   }
 
@@ -89,6 +83,16 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     m_drivetrain.updateOdometry();
+    
+    switch (SmartDashboard.getNumber("ModeForPathWeaver", 0) {
+      case 1:
+        
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+    }
   }
 
   /**
@@ -98,8 +102,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    
   }
-
+  
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
