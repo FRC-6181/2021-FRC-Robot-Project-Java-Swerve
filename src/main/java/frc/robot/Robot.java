@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
     
   }
 
-  /**
+  /*
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
@@ -83,14 +83,21 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     m_drivetrain.updateOdometry();
+    /* Determines which Trajectory to use (See Lines 55-68)*/
+    public c_Trajectory = null;
     
     switch (SmartDashboard.getNumber("ModeForPathWeaver", 0) {
       case 1:
-        
+        c_Trajectory = m_Trajectory_1
         break;
-      case 2:
+      case 2:        
+        c_Trajectory = m_Trajectory_2
         break;
       case 3:
+        c_Trajectory = m_Trajectory_3
+        break;
+      default:
+        c_Trajectory = null
         break;
     }
   }
