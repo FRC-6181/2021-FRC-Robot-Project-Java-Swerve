@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
   public static Trajectory m_Trajectory_1 = new Trajectory();
   public static Trajectory m_Trajectory_2 = new Trajectory();
   public static Trajectory m_Trajectory_3 = new Trajectory();
+  public Trajectory c_Trajectory = new Trajectory();
   
   Command autonomousCommand;
 
@@ -84,20 +85,20 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     m_drivetrain.updateOdometry();
     /* Determines which Trajectory to use (See Lines 55-68)*/
-    public c_Trajectory = null;
+    
     
     switch (SmartDashboard.getNumber("ModeForPathWeaver", 0) {
       case 1:
-        c_Trajectory = m_Trajectory_1
+        c_Trajectory = m_Trajectory_1;
         break;
       case 2:        
-        c_Trajectory = m_Trajectory_2
+        c_Trajectory = m_Trajectory_2;
         break;
       case 3:
-        c_Trajectory = m_Trajectory_3
+        c_Trajectory = m_Trajectory_3;
         break;
       default:
-        c_Trajectory = null
+        c_Trajectory = null;
         break;
     }
   }
