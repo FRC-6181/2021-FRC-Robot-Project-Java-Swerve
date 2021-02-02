@@ -7,17 +7,20 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ConveyorBelts;
 import frc.robot.subsystems.ConveyorGate;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterLift;
-
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,14 +39,18 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
   public static Trajectory m_Trajectory_1 = new Trajectory();
 
-
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
     m_oi = new OI();
+    try {
+      m_Trajectory_1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.wpilib.json"));
+    } catch (IOException e) {
+      DriverStation.reportError("Could not Load Trajectory: Slalom", true);
+    }
     
   }
 
