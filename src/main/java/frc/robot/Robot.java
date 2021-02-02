@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
@@ -40,6 +41,8 @@ public class Robot extends TimedRobot {
   public static Trajectory m_Trajectory_1 = new Trajectory();
   public static Trajectory m_Trajectory_2 = new Trajectory();
   public static Trajectory m_Trajectory_3 = new Trajectory();
+
+  Command autonomousCommand;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -125,7 +128,9 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    
+    if (this.autonomousCommand != null) {
+      this.autonomousCommand.start();
+    }
   }
 
   /**
@@ -142,7 +147,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    
+    if (this.autonomousCommand != null) {
+      this.autonomousCommand.cancel();
+    }
   }
 
   /**
