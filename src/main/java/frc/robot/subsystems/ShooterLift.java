@@ -20,6 +20,7 @@ import frc.robot.RobotMap;
 public class ShooterLift extends Subsystem {
 
   private TalonSRX shooterLift = new TalonSRX(RobotMap.shooterLiftID);
+  private double setpoint = 0;
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public ShooterLift() {
@@ -36,7 +37,12 @@ public class ShooterLift extends Subsystem {
     return shooterLift.getSelectedSensorPosition();
   }
 
+  public double getshooterSetpoint(){
+    return this.setpoint;
+  }
+
   public void setShooterPosition(Double Position) {
+    this.setpoint = Position;
     shooterLift.set(TalonSRXControlMode.Position, Position);
   }
 
