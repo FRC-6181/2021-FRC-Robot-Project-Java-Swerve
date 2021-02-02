@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -88,6 +90,13 @@ public class RobotMap {
 	//Climber
 	public static final int ClimbMotor1ID = 0;
 	public static final int ClimbMotor2ID = 0;
+	public static double kRamseteB;
+	public static Object ksVolts;
+	public static double kRamseteZeta;
+	public static Object kvVoltSecondsPerMeter;
+	public static Object kaVoltSecondsSquaredPerMeter;
+	public static DifferentialDriveKinematics kDriveKinematics;
+	public static double kPDriveVel;
 	
 
 	
