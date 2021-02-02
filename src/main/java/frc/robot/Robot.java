@@ -38,6 +38,8 @@ public class Robot extends TimedRobot {
   public static Climber m_climber = new Climber();
   public static OI m_oi;
   public static Trajectory m_Trajectory_1 = new Trajectory();
+  public static Trajectory m_Trajectory_2 = new Trajectory();
+  public static Trajectory m_Trajectory_3 = new Trajectory();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -51,6 +53,25 @@ public class Robot extends TimedRobot {
     } catch (IOException e) {
       DriverStation.reportError("Could not Load Trajectory: Slalom", true);
     }
+    try {
+      m_Trajectory_2 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/BarrelRoll.wpilib.json"));
+    } catch (IOException e) {
+      DriverStation.reportError("Could not Load Trajectory: Barrel Roll", true);
+    }
+    try {
+      m_Trajectory_3 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Bounce.wpilib.json"));
+    } catch (IOException e) {
+      DriverStation.reportError("Could not Load Trajectory: Bounce", true);
+    }
+    
+    /*switch ("") {
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+    }*/
     
   }
 
