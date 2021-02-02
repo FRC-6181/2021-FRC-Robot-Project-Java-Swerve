@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ConveyorBelts;
 import frc.robot.subsystems.ConveyorGate;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
   public static ConveyorGate m_conveyorgate = new ConveyorGate();
   public static Climber m_climber = new Climber();
   public static OI m_oi;
+  public static Trajectory m_Trajectory_1 = new Trajectory();
 
 
   /**
