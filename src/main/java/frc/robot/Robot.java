@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
   public static Trajectory m_Trajectory_2 = new Trajectory();
   public static Trajectory m_Trajectory_3 = new Trajectory();
   public Trajectory c_Trajectory = new Trajectory();
+  public double modeForAutonomous = 0.0;
   
   Command autonomousCommand;
 
@@ -52,25 +53,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-    try {
-      m_Trajectory_1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.wpilib.json"));
-    } catch (IOException e) {
-      DriverStation.reportError("Could not Load Trajectory: Slalom", true);
-    }
-    try {
-      m_Trajectory_2 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/BarrelRoll.wpilib.json"));
-    } catch (IOException e) {
-      DriverStation.reportError("Could not Load Trajectory: Barrel Roll", true);
-    }
-    try {
-      m_Trajectory_3 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Bounce.wpilib.json"));
-    } catch (IOException e) {
-      DriverStation.reportError("Could not Load Trajectory: Bounce", true);
-    }
-    
-    
-    
-    
   }
 
   /*
@@ -85,16 +67,29 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     m_drivetrain.updateOdometry();
     /* Determines which Trajectory to use (See Lines 55-68)*/
-    
-    switch (SmartDashboard.getNumber("ModeForPathWeaver", 0) {
+    modeForAutonomous = SmartDashboard.getNumber("ModeForPathWeaver", 0);
+    int modeForAutonomousInt = (int) modeForAutonomous;
+    switch (modeForAutonomous) {
       case 1:
-        c_Trajectory = m_Trajectory_1;
+        try {
+           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.wpilib.json"));
+        } catch (IOException e) {
+          DriverStation.reportError("Could not Load Trajectory: Slalom", true);
+        }
         break;
       case 2:        
-        c_Trajectory = m_Trajectory_2;
+        try {
+           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/BarrelRoll.wpilib.json"));
+        } catch (IOException e) {
+          DriverStation.reportError("Could not Load Trajectory: Barrel Roll", true);
+        }
         break;
       case 3:
-        c_Trajectory = m_Trajectory_3;
+        try {
+           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Bounce.wpilib.json"));
+        } catch (IOException e) {
+          DriverStation.reportError("Could not Load Trajectory: Bounce", true);
+        }
         break;
       default:
         c_Trajectory = null;
