@@ -26,6 +26,7 @@ import frc.robot.RobotMap;
 public class Drivetrain extends Subsystem{
   public static final double kMaxSpeed = 3.0; // 3 meters per second
   public static final double kMaxAngularSpeed = Math.PI; // 1/2 rotation per second
+  private double[] WheelAngles = {0, 0, 0, 0};
 
   private final SwerveModule m_frontLeft = new SwerveModule(
     RobotMap.FLDriveMotorID, 
@@ -70,6 +71,18 @@ public class Drivetrain extends Subsystem{
    */
   public Pose2d getPose(){
     return m_odometry.getPoseMeters();
+  }
+
+  /**
+   * Returns the Current Angles of the Swerve Modules
+   * @return Wheel Module Angles
+   */
+  public double[] getModuleAngle(){
+    this.WheelAngles[0] = m_frontLeft.getwheelposition();
+    this.WheelAngles[1] = m_frontRight.getwheelposition();
+    this.WheelAngles[2] = m_backLeft.getwheelposition();
+    this.WheelAngles[3] = m_backRight.getwheelposition();
+    return WheelAngles;
   }
 
   /**
@@ -139,6 +152,7 @@ public class Drivetrain extends Subsystem{
         m_backRight.getState()
     );
   }
+  
 
   @Override
   protected void initDefaultCommand() {

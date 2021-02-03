@@ -90,7 +90,7 @@ public class SwerveModule{
   }
 
   public double getwheelposition(){
-    return m_turningEncoder.get();
+    return (double) m_turningEncoder.get();
   }
 
 }

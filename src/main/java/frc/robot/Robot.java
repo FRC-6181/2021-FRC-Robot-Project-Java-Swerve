@@ -41,8 +41,9 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
   public static Trajectory c_Trajectory = new Trajectory();
   public double modeForAutonomous = 0.0;
-  
+
   Command autonomousCommand;
+  
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -50,6 +51,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    initSmartDashboard();
     m_oi = new OI();
   }
 
@@ -65,6 +67,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     m_drivetrain.updateOdometry();
     updateAutoPath();
+    updateSmartDashboard();
   }
 
   /**
@@ -177,6 +180,30 @@ public class Robot extends TimedRobot {
         c_Trajectory = null;
         break;
     }
+  }
+
+  public void initSmartDashboard(){
+    SmartDashboard.putNumber("ModeForPathWeaver", 0);
+    /** Shooter Information */
+    SmartDashboard.putNumber("Shooter Position DMD", m_shooterlift.getshooterSetpoint());
+    SmartDashboard.putNumber("Shooter Position ACT", m_shooterlift.getshooterPosition());
+    /** Swerve Wheel Angles */
+    SmartDashboard.putNumber("Front Left Module Angle", m_drivetrain.getModuleAngle()[0]);
+    SmartDashboard.putNumber("Front Right Module Angle", m_drivetrain.getModuleAngle()[1]);
+    SmartDashboard.putNumber("Back Left Module Angle", m_drivetrain.getModuleAngle()[2]);
+    SmartDashboard.putNumber("Back Right Module Angle", m_drivetrain.getModuleAngle()[3]);
+
+  }
+
+  public void updateSmartDashboard(){
+    /** Shooter Information */
+    SmartDashboard.putNumber("Shooter Position DMD", m_shooterlift.getshooterSetpoint());
+    SmartDashboard.putNumber("Shooter Position ACT", m_shooterlift.getshooterPosition());
+    /** Swerve Wheel Angles */
+    SmartDashboard.putNumber("Front Left Module Angle", m_drivetrain.getModuleAngle()[0]);
+    SmartDashboard.putNumber("Front Right Module Angle", m_drivetrain.getModuleAngle()[1]);
+    SmartDashboard.putNumber("Back Left Module Angle", m_drivetrain.getModuleAngle()[2]);
+    SmartDashboard.putNumber("Back Right Module Angle", m_drivetrain.getModuleAngle()[3]);
   }
 
 }
