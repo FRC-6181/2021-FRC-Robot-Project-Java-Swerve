@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
     /* Determines which Trajectory to use (See Lines 55-68)*/
     modeForAutonomous = SmartDashboard.getNumber("ModeForPathWeaver", 0);
     int modeForAutonomousInt = (int) modeForAutonomous;
-    switch (modeForAutonomous) {
+    switch (modeForAutonomousInt) {
       case 1:
         try {
            c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.wpilib.json"));
