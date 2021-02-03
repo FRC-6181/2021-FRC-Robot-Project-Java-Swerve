@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
   public static ConveyorGate m_conveyorgate = new ConveyorGate();
   public static Climber m_climber = new Climber();
   public static OI m_oi;
-  public Trajectory c_Trajectory = new Trajectory();
+  public static Trajectory c_Trajectory = new Trajectory();
   public double modeForAutonomous = 0.0;
   
   Command autonomousCommand;
@@ -173,7 +173,7 @@ public class Robot extends TimedRobot {
           DriverStation.reportError("Could not Load Trajectory: Bounce", true);
         }
         break;
-      default:
+      default:      
         c_Trajectory = null;
         break;
     }

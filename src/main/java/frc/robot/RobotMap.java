@@ -7,7 +7,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -90,13 +92,20 @@ public class RobotMap {
 	//Climber
 	public static final int ClimbMotor1ID = 0;
 	public static final int ClimbMotor2ID = 0;
-	public static double kRamseteB;
-	public static Object ksVolts;
-	public static double kRamseteZeta;
-	public static Object kvVoltSecondsPerMeter;
-	public static Object kaVoltSecondsSquaredPerMeter;
-	public static DifferentialDriveKinematics kDriveKinematics;
-	public static double kPDriveVel;
+	
+	public static double kPDriveVel = 1.0;
+	public static double kWheelBase = 29.5;
+	public static double kTrackwidth = 21.5;
+	public static double kMaxSpeedMetersPerSecond = 2.0;
+	public static double kPThetaController = 1.0;
+	public static Constraints kThetaControllerConstraints;
+
+	public static SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+      new Translation2d(RobotMap.kWheelBase / 2, RobotMap.kTrackwidth / 2), //Front Left
+      new Translation2d(RobotMap.kWheelBase / 2, -RobotMap.kTrackwidth / 2), //Front Right
+      new Translation2d(-RobotMap.kWheelBase / 2, RobotMap.kTrackwidth / 2), //Back Left
+      new Translation2d(-RobotMap.kWheelBase / 2, -RobotMap.kTrackwidth / 2) //Back Right
+  );
 	
 
 	

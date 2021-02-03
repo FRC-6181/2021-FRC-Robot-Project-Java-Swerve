@@ -11,11 +11,13 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import frc.robot.RobotMap;
 
 /**
@@ -25,27 +27,58 @@ public class Drivetrain extends Subsystem{
   public static final double kMaxSpeed = 3.0; // 3 meters per second
   public static final double kMaxAngularSpeed = Math.PI; // 1/2 rotation per second
 
-  private final Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
-  private final Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
-  private final Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
-  private final Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
-
-  private final SwerveModule m_frontLeft = new SwerveModule(RobotMap.FLDriveMotorID, RobotMap.FLSteerMotorID, RobotMap.FLSteerEncoderID, RobotMap.FLSteeringOffset);
-  private final SwerveModule m_frontRight = new SwerveModule(RobotMap.FRDriveMotorID, RobotMap.FRSteerMotorID, RobotMap.FRSteerEncoderID, RobotMap.FRSteeringOffset);
-  private final SwerveModule m_backLeft = new SwerveModule(RobotMap.BLDriveMotorID, RobotMap.BLSteerMotorID, RobotMap.BLSteerEncoderID, RobotMap.BLSteeringOffset);
-  private final SwerveModule m_backRight = new SwerveModule(RobotMap.BRDriveMotorID, RobotMap.BRSteerMotorID, RobotMap.BRSteerEncoderID, RobotMap.BRSteeringOffset);
+  private final SwerveModule m_frontLeft = new SwerveModule(
+    RobotMap.FLDriveMotorID, 
+    RobotMap.FLSteerMotorID, 
+    RobotMap.FLSteerEncoderID, 
+    RobotMap.FLSteeringOffset);
+  private final SwerveModule m_frontRight = new SwerveModule(
+    RobotMap.FRDriveMotorID, 
+    RobotMap.FRSteerMotorID, 
+    RobotMap.FRSteerEncoderID, 
+    RobotMap.FRSteeringOffset);
+  private final SwerveModule m_backLeft = new SwerveModule(
+    RobotMap.BLDriveMotorID, 
+    RobotMap.BLSteerMotorID, 
+    RobotMap.BLSteerEncoderID, 
+    RobotMap.BLSteeringOffset);
+  private final SwerveModule m_backRight = new SwerveModule(
+    RobotMap.BRDriveMotorID, 
+    RobotMap.BRSteerMotorID, 
+    RobotMap.BRSteerEncoderID, 
+    RobotMap.BRSteeringOffset);
 
   private final AHRS m_gyro = new AHRS(Port.kMXP);
-  //private final AnalogGyro m_gyro = new AnalogGyro(0);
 
   private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
-      m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation
+      new Translation2d(RobotMap.kWheelBase / 2, RobotMap.kTrackwidth / 2), //Front Left
+      new Translation2d(RobotMap.kWheelBase / 2, -RobotMap.kTrackwidth / 2), //Front Right
+      new Translation2d(-RobotMap.kWheelBase / 2, RobotMap.kTrackwidth / 2), //Back Left
+      new Translation2d(-RobotMap.kWheelBase / 2, -RobotMap.kTrackwidth / 2) //Back Right
   );
 
   private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(m_kinematics, getAngle());
 
   public Drivetrain() {
     m_gyro.reset();
+  }
+
+  /**
+   * Returns the Current Pose of the Robot
+   * 
+   * @return Current Pose
+   */
+  public Pose2d getPose(){
+    return m_odometry.getPoseMeters();
+  }
+
+  /**
+   * Resets the Pose to the Trajectory Starting Point
+   * 
+   * @param Pose Starting Point of the Trajectory
+   */
+  public void resetOdometry(Pose2d pose){
+    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
   /**
@@ -78,6 +111,20 @@ public class Drivetrain extends Subsystem{
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_backLeft.setDesiredState(swerveModuleStates[2]);
     m_backRight.setDesiredState(swerveModuleStates[3]);
+  }
+
+    /**
+   * Sets the swerve ModuleStates.
+   *
+   * @param desiredStates The desired SwerveModule states.
+   */
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
+    SwerveDriveKinematics.normalizeWheelSpeeds(
+        desiredStates, RobotMap.kMaxSpeedMetersPerSecond);
+    m_frontLeft.setDesiredState(desiredStates[0]);
+    m_frontRight.setDesiredState(desiredStates[1]);
+    m_backLeft.setDesiredState(desiredStates[2]);
+    m_backRight.setDesiredState(desiredStates[3]);
   }
 
   /**

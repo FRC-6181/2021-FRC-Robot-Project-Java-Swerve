@@ -9,12 +9,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
@@ -34,7 +35,7 @@ public class SwerveModule{
 
   private final AnalogEncoder m_turningEncoder;
 
-  private final PIDController m_drivePIDController = new PIDController(1, 0, 0);
+  private final CANPIDController m_drivePIDController;
 
   private final ProfiledPIDController m_turningPIDController = new ProfiledPIDController(1, 0, 0,
       new TrapezoidProfile.Constraints(kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration));
@@ -52,7 +53,7 @@ public class SwerveModule{
     m_turningMotor = new VictorSPX(turningMotorChannel); // Sets the Turn Motor ID
     m_turningEncoder = new AnalogEncoder(new AnalogInput(turningEncoderPort)); // Sets the Turn Encoder Port
     m_turningoffset = wheelOffset; // Sets the offset for the Turning Encoder
-    
+    m_drivePIDController = new CANPIDController(m_driveMotor);
     m_turningEncoder.setDistancePerRotation(360.0);
 
     m_driveMotor.getEncoder().setVelocityConversionFactor(2 * Math.PI * RobotMap.DrivetrainGearRatio * Units.inchesToMeters(RobotMap.DriveWheelRadius));
@@ -79,16 +80,12 @@ public class SwerveModule{
   public void setDesiredState(SwerveModuleState desiredState) {
     SwerveModuleState state = SwerveModuleState.optimize(desiredState, new Rotation2d(Units.degreesToRadians(m_turningEncoder.get() + m_turningoffset)));
     // Calculate the drive output from the drive PID controller.
-    final double driveOutput = m_drivePIDController.calculate(
-      m_driveMotor.getEncoder().getVelocity(), state.speedMetersPerSecond);
-
+    m_drivePIDController.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
     // Calculate the turning motor output from the turning PID controller.
     final var turnOutput = m_turningPIDController.calculate(
       Units.degreesToRadians(m_turningEncoder.get() + m_turningoffset), state.angle.getRadians()
     );
 
-    // Calculate the turning motor output from the turning PID controller.
-    m_driveMotor.set(driveOutput);
     m_turningMotor.set(VictorSPXControlMode.PercentOutput,turnOutput);
   }
 

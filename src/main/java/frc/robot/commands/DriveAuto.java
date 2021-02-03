@@ -6,32 +6,41 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.Drivetrain;
 
 public class DriveAuto extends Command {
-  private Trajectory m_Trajectory;
-  private SwerveControllerCommand m_SwerveControllerCommand;
+  private ProfiledPIDController thetaController = new ProfiledPIDController(
+      RobotMap.kPThetaController, 0, 0, RobotMap.kThetaControllerConstraints);
+    
 
-  public DriveAuto(Trajectory Base) {
-    m_Trajectory = Base;
+  public DriveAuto() {
     // Use requires() here to declare subsystem dependencies
-    super.requires(Robot.m_drivetrain);
+    requires(Robot.m_drivetrain);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {}
+  protected void initialize() {
+    thetaController.enableContinuousInput(-Math.PI, Math.PI); 
+  }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    /*m_SwerveControllerCommand = new SwerveControllerCommand(m_Trajectory, Robot.m_drivetrain.odometry, RobotMap.kDriveKinematics, 
-    new PIDController(RobotMap.kPDriveVel, 0, 0),
-    new PIDController(RobotMap.kPDriveVel, 0, 0), new PIDController(RobotMap.kPDriveVel, 0, 0), Robot.m_drivetrain.states, Robot.m_drivetrain);
+    var m_SwerveControllerCommand = new SwerveControllerCommand(Robot.c_Trajectory, 
+      Robot.m_drivetrain::getPose, 
+      RobotMap.m_kinematics, 
+      new PIDController(RobotMap.kPDriveVel, 0, 0),
+      new PIDController(RobotMap.kPDriveVel, 0, 0), 
+      thetaController,    
+      Robot.m_drivetrain::setModuleStates, 
+      Robot.m_drivetrain);
     
   }
 
