@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.subsystems.Climber;
@@ -38,9 +39,6 @@ public class Robot extends TimedRobot {
   public static ConveyorGate m_conveyorgate = new ConveyorGate();
   public static Climber m_climber = new Climber();
   public static OI m_oi;
-  public static Trajectory m_Trajectory_1 = new Trajectory();
-  public static Trajectory m_Trajectory_2 = new Trajectory();
-  public static Trajectory m_Trajectory_3 = new Trajectory();
   public Trajectory c_Trajectory = new Trajectory();
   public double modeForAutonomous = 0.0;
   
@@ -66,35 +64,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     m_drivetrain.updateOdometry();
-    /* Determines which Trajectory to use (See Lines 55-68)*/
-    modeForAutonomous = SmartDashboard.getNumber("ModeForPathWeaver", 0);
-    int modeForAutonomousInt = (int) modeForAutonomous;
-    switch (modeForAutonomousInt) {
-      case 1:
-        try {
-           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.wpilib.json"));
-        } catch (IOException e) {
-          DriverStation.reportError("Could not Load Trajectory: Slalom", true);
-        }
-        break;
-      case 2:        
-        try {
-           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/BarrelRoll.wpilib.json"));
-        } catch (IOException e) {
-          DriverStation.reportError("Could not Load Trajectory: Barrel Roll", true);
-        }
-        break;
-      case 3:
-        try {
-           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Bounce.wpilib.json"));
-        } catch (IOException e) {
-          DriverStation.reportError("Could not Load Trajectory: Bounce", true);
-        }
-        break;
-      default:
-        c_Trajectory = null;
-        break;
-    }
+    updateAutoPath();
   }
 
   /**
@@ -173,4 +143,40 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+  /**
+   * Autonomous Path Selector
+   * Determines which Trajectory to use (See Lines 55-68)
+   */
+
+  public void updateAutoPath(){ 
+    modeForAutonomous = SmartDashboard.getNumber("ModeForPathWeaver", 0);
+    switch ((int)modeForAutonomous) {
+      case 1:
+        try {
+           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.wpilib.json"));
+        } catch (IOException e) {
+          DriverStation.reportError("Could not Load Trajectory: Slalom", true);
+        }
+        break;
+      case 2:        
+        try {
+           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/BarrelRoll.wpilib.json"));
+        } catch (IOException e) {
+          DriverStation.reportError("Could not Load Trajectory: Barrel Roll", true);
+        }
+        break;
+      case 3:
+        try {
+           c_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Bounce.wpilib.json"));
+        } catch (IOException e) {
+          DriverStation.reportError("Could not Load Trajectory: Bounce", true);
+        }
+        break;
+      default:
+        c_Trajectory = null;
+        break;
+    }
+  }
+
 }
