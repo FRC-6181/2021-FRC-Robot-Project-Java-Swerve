@@ -12,6 +12,11 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class DriveSwerve extends Command {
+  private double xSpeed = 0.0;
+  private double ySpeed = 0.0;
+  private double rot = 0.0;
+  private boolean fieldRelative = false;
+
   public DriveSwerve() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_drivetrain);
@@ -25,27 +30,19 @@ public class DriveSwerve extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if((Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_Y_AXIS) + Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_X_AXIS)) > 0.04){
-      if(Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_BUTTON2) == true){
-        Robot.m_drivetrain.drive(Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_X_AXIS), 
-        Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_Y_AXIS), 
-        -0.5, 
-        Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_TRIGGER));
-      }else if(Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_BUTTON3) == true){
-        Robot.m_drivetrain.drive(Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_X_AXIS), 
-        Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_Y_AXIS), 
-        0.5, 
-        Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_TRIGGER));
-      }else{    
-        Robot.m_drivetrain.drive(Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_X_AXIS), 
-        Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_Y_AXIS), 
-        Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_Z_AXIS), 
-        Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_TRIGGER));
-      }
+    xSpeed = Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_X_AXIS);
+    ySpeed = Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_Y_AXIS);
+    fieldRelative = Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_TRIGGER);
+
+    if(Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_BUTTON2) == true){
+      rot = -0.5;
+    }else if(Robot.m_oi.GetDriverRawButton(RobotMap.DRIVER_BUTTON3) == true){
+      rot = 0.5;
+    }else{
+      rot = Robot.m_oi.GetDriverRawAxis(RobotMap.DRIVER_Z_AXIS);
     }
-    else{
-      Robot.m_drivetrain.drive(0, 0, 0, false);
-    }
+
+    Robot.m_drivetrain.drive(xSpeed, ySpeed, rot, fieldRelative);
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -25,7 +25,7 @@ public class ConveyorBelts extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    //setDefaultCommand(new RunConveyor(0.0));
   }
 
   public double getconveyorstatus(){

@@ -45,33 +45,33 @@ public class RobotMap {
 	public static final int DRIVER_X_AXIS = 0;
 	public static final int DRIVER_Y_AXIS = 1;
 	public static final int DRIVER_Z_AXIS = 2;
-	public static final int DRIVER_TRIGGER = 0;
-	public static final int DRIVER_BUTTON2 = 2;
-	public static final int DRIVER_BUTTON3 = 3;
+	public static final int DRIVER_TRIGGER = 1;
+	public static final int DRIVER_BUTTON2 = 3;
+	public static final int DRIVER_BUTTON3 = 4;
 
 	//Copilot Xbox Controller
 	public static final int copilotControllerID = 1;
-	public static final int BUTTON_A = 0;
-	public static final int BUTTON_B = 1;
-	public static final int BUTTON_X = 2;
-	public static final int BUTTON_Y = 3;
-	public static final int LEFT_STICK_Y = 1;
-	public static final int RIGHT_TRIGGER = 2;
-	public static final int LEFT_TRIGGER = 3;
-	public static final int RIGHT_STICK_Y = 5;
+	public static final int BUTTON_A = 1;
+	public static final int BUTTON_B = 2;
+	public static final int BUTTON_X = 3;
+	public static final int BUTTON_Y = 4;
+	public static final int LEFT_STICK_Y = 2;
+	public static final int RIGHT_TRIGGER = 3;
+	public static final int LEFT_TRIGGER = 4;
+	public static final int RIGHT_STICK_Y = 6;
 	public static final double AXIS_DEADBAND = 0.5;
 
 	//Drivetrain Drive Motors
-	public static final int FLDriveMotorID = 18;
-	public static final int FRDriveMotorID = 19;
-	public static final int BLDriveMotorID = 16;
-	public static final int BRDriveMotorID = 17;
+	public static final int FLDriveMotorID = 10;
+	public static final int FRDriveMotorID = 11;
+	public static final int BLDriveMotorID = 13;
+	public static final int BRDriveMotorID = 12;
 
 	//Drivetrain Steer Motors
-	public static final int FLSteerMotorID = 13;
+	public static final int FLSteerMotorID = 16;
 	public static final int FRSteerMotorID = 14;
-	public static final int BLSteerMotorID = 11;
-	public static final int BRSteerMotorID = 12;
+	public static final int BLSteerMotorID = 15;
+	public static final int BRSteerMotorID = 17;
 
 	//Drivetrain Steer Encoders
 	public static final int FLSteerEncoderID = 2;
@@ -90,8 +90,8 @@ public class RobotMap {
 	public static final double DriveWheelRadius = 2;
 
 	//Climber
-	public static final int ClimbMotor1ID = 0;
-	public static final int ClimbMotor2ID = 0;
+	public static final int ClimbMotor1ID = 21;
+	public static final int ClimbMotor2ID = 30;
 	
 	public static double kPDriveVel = 1.0;
 	public static double kWheelBase = 29.5;

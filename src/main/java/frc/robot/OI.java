@@ -9,11 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.MoveShooter;
-import frc.robot.commands.OpenGate;
-import frc.robot.commands.RunConveyor;
+
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,10 +21,10 @@ public class OI {
   private Joystick driverJoystick = new Joystick(RobotMap.driverJoystickID);
 
   private XboxController copilotController = new XboxController(RobotMap.copilotControllerID);
-  private Button xButton = new JoystickButton(copilotController, RobotMap.BUTTON_X);
-  private Button bButton = new JoystickButton(copilotController, RobotMap.BUTTON_B);
-  private Button yButton = new JoystickButton(copilotController, RobotMap.BUTTON_Y);
-  private Button aButton = new JoystickButton(copilotController, RobotMap.BUTTON_A);
+  //private Button xButton = new JoystickButton(copilotController, RobotMap.BUTTON_X);
+  //private Button bButton = new JoystickButton(copilotController, RobotMap.BUTTON_B);
+  //private Button yButton = new JoystickButton(copilotController, RobotMap.BUTTON_Y);
+  //private Button aButton = new JoystickButton(copilotController, RobotMap.BUTTON_A);
   
   public double GetDriverRawAxis(int axis) { //gets the Raw Axis Value from the Driver Joystick
     return driverJoystick.getRawAxis(axis);
@@ -47,13 +44,13 @@ public class OI {
 
   public OI(){
     
-    bButton.whileHeld(new OpenGate(true)); //Opens the Conveyor Gate
+    //bButton.whileHeld(new OpenGate()); //Opens the Conveyor Gate
 
-    yButton.whileHeld(new RunConveyor(-1.0)); //Runs the Conveyor in Reverse
+    //yButton.whileHeld(new RunConveyor(-1.0)); //Runs the Conveyor in Reverse
     
     //The Following Controls Jog the Shooter into different Positions
-    aButton.whenPressed(new MoveShooter(0.0));
-    xButton.whenPressed(new MoveShooter(750.0));
+    //aButton.whenPressed(new MoveShooter(0.0));
+    //xButton.whenPressed(new MoveShooter(750.0));
     
   }
   

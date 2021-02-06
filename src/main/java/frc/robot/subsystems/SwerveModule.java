@@ -55,6 +55,7 @@ public class SwerveModule{
     m_turningoffset = wheelOffset; // Sets the offset for the Turning Encoder
     m_drivePIDController = new CANPIDController(m_driveMotor);
     m_turningEncoder.setDistancePerRotation(360.0);
+    m_drivePIDController.setP(1, 0);
 
     m_driveMotor.getEncoder().setVelocityConversionFactor(2 * Math.PI * RobotMap.DrivetrainGearRatio * Units.inchesToMeters(RobotMap.DriveWheelRadius));
     // Limit the PID Controller's input range between -pi and pi and set the input
@@ -90,7 +91,7 @@ public class SwerveModule{
   }
 
   public double getwheelposition(){
-    return (double) m_turningEncoder.get();
+    return (double) Units.radiansToDegrees(m_turningEncoder.get());
   }
 
 }

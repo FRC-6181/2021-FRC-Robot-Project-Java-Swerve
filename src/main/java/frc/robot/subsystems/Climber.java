@@ -33,7 +33,7 @@ public class Climber extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    //this.setDefaultCommand(new Climb());
   }
 
   public void moveclimber(double speed){

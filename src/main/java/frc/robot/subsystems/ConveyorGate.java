@@ -24,11 +24,19 @@ public class ConveyorGate extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    //setDefaultCommand(new CloseGate());
   }
 
   public void setgateposition(Value Position){ //Controls the State of the Conveyor Gate
     conveyorGate.set(Position);
+  }
+
+  public void openconveyorgate(){ //Opens the Conveyor Gate
+    conveyorGate.set(Value.kReverse);
+  }
+
+  public void closeconveyorgate(){ //Closes the Conveyor Gate
+    conveyorGate.set(Value.kForward);
   }
 
   public Value getgateposition() { //Returns the Current Position of the Conveyor Gate
